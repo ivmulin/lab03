@@ -38,13 +38,14 @@ def main():
     # =========================================================================
     fig, ax = plt.subplots(figsize=(12, 7))
 
-    plot_smooth(ax, N, df['RSQ1D_Build'],       'RSQ 1D префикс ($O(N)$)',          'o', '#1f77b4')
-    plot_smooth(ax, N, df['RSQ2D_Build'],       'RSQ 2D префикс ($O(N^2)$)',         's', '#ff7f0e')
-    plot_smooth(ax, N, df['RMQ1D_Build'],       'RMQ 1D предпросчёт ($O(N^2)$)',     '^', '#2ca02c')
-    plot_smooth(ax, N, df['Sqrt_Build'],        'Корневая дек. ($O(N)$)',            'v', '#d62728')
-    plot_smooth(ax, N, df['SegTree_Build'],     'Дерево отрезков ($O(N)$)',          'd', '#9467bd')
-    plot_smooth(ax, N, df['Fenwick_Build'],     'Дерево Фенвика ($O(N \\log N)$)',   'P', '#8c564b')
-    plot_smooth(ax, N, df['SparseTable_Build'], 'Разреженная таблица ($O(N \\log N)$)', 'X', '#e377c2')
+    plot_smooth(ax, N, df['RSQ1D_Build'],       'RSQ 1D префикс ($O(N)$)',               'o', '#1f77b4')
+    plot_smooth(ax, N, df['RSQ2D_Build'],       'RSQ 2D префикс ($O(N^2)$)',              's', '#ff7f0e')
+    plot_smooth(ax, N, df['RMQ1D_Build'],       'RMQ 1D предпросчёт ($O(N^2)$)',          '^', '#2ca02c')
+    plot_smooth(ax, N, df['SqrtRMQ_Build'],     'Корневая дек. RMQ ($O(N)$)',             'v', '#d62728')
+    plot_smooth(ax, N, df['SqrtRSQ_Build'],     'Корневая дек. RSQ ($O(N)$)',             '<', '#bcbd22')
+    plot_smooth(ax, N, df['SegTree_Build'],     'Дерево отрезков ($O(N)$)',               'd', '#9467bd')
+    plot_smooth(ax, N, df['Fenwick_Build'],     'Дерево Фенвика ($O(N \\log N)$)',        'P', '#8c564b')
+    plot_smooth(ax, N, df['SparseTable_Build'], 'Разреженная таблица ($O(N \\log N)$)',   'X', '#e377c2')
 
     ax.set_title('Сложность построения структур данных (ключевые операции)', fontsize=14, pad=15)
     ax.set_xlabel('Размер входных данных ($N$)', fontsize=12)
@@ -62,13 +63,14 @@ def main():
     # =========================================================================
     fig, ax = plt.subplots(figsize=(12, 7))
 
-    plot_smooth(ax, N, df['RSQ1D_Query_Avg'],       'RSQ 1D префикс ($O(1)$)',          'o', '#1f77b4')
-    plot_smooth(ax, N, df['RSQ2D_Query_Avg'],       'RSQ 2D префикс ($O(1)$)',           's', '#ff7f0e')
-    plot_smooth(ax, N, df['RMQ1D_Query_Avg'],       'RMQ 1D предпросчёт ($O(1)$)',       '^', '#2ca02c')
-    plot_smooth(ax, N, df['Sqrt_Query_Avg'],        'Корневая дек. ($O(\\sqrt{N})$)',     'v', '#d62728')
-    plot_smooth(ax, N, df['SegTree_Query_Avg'],     'Дерево отрезков ($O(\\log N)$)',     'd', '#9467bd')
-    plot_smooth(ax, N, df['Fenwick_Query_Avg'],     'Дерево Фенвика ($O(\\log N)$)',      'P', '#8c564b')
-    plot_smooth(ax, N, df['SparseTable_Query_Avg'], 'Разреженная таблица ($O(1)$)',       'X', '#e377c2')
+    plot_smooth(ax, N, df['RSQ1D_Query_Avg'],       'RSQ 1D префикс ($O(1)$)',               'o', '#1f77b4')
+    plot_smooth(ax, N, df['RSQ2D_Query_Avg'],       'RSQ 2D префикс ($O(1)$)',                's', '#ff7f0e')
+    plot_smooth(ax, N, df['RMQ1D_Query_Avg'],       'RMQ 1D предпросчёт ($O(1)$)',            '^', '#2ca02c')
+    plot_smooth(ax, N, df['SqrtRMQ_Query_Avg'],     'Корневая дек. RMQ ($O(\\sqrt{N})$)',     'v', '#d62728')
+    plot_smooth(ax, N, df['SqrtRSQ_Query_Avg'],     'Корневая дек. RSQ ($O(\\sqrt{N})$)',     '<', '#bcbd22')
+    plot_smooth(ax, N, df['SegTree_Query_Avg'],     'Дерево отрезков ($O(\\log N)$)',          'd', '#9467bd')
+    plot_smooth(ax, N, df['Fenwick_Query_Avg'],     'Дерево Фенвика ($O(\\log N)$)',           'P', '#8c564b')
+    plot_smooth(ax, N, df['SparseTable_Query_Avg'], 'Разреженная таблица ($O(1)$)',            'X', '#e377c2')
 
     ax.set_title('Средняя сложность запроса на отрезке (ключевые операции)', fontsize=14, pad=15)
     ax.set_xlabel('Размер входных данных ($N$)', fontsize=12)
@@ -87,9 +89,10 @@ def main():
     # =========================================================================
     fig, ax = plt.subplots(figsize=(12, 7))
 
-    plot_smooth(ax, N, df['Sqrt_Update_Avg'],    'Корневая дек. ($O(\\sqrt{N})$)', 'v', '#d62728')
-    plot_smooth(ax, N, df['SegTree_Update_Avg'], 'Дерево отрезков ($O(\\log N)$)', 'd', '#9467bd')
-    plot_smooth(ax, N, df['Fenwick_Update_Avg'], 'Дерево Фенвика ($O(\\log N)$)',  'P', '#8c564b')
+    plot_smooth(ax, N, df['SqrtRMQ_Update_Avg'], 'Корневая дек. RMQ ($O(\\sqrt{N})$)', 'v', '#d62728')
+    plot_smooth(ax, N, df['SqrtRSQ_Update_Avg'], 'Корневая дек. RSQ ($O(\\sqrt{N})$)', '<', '#bcbd22')
+    plot_smooth(ax, N, df['SegTree_Update_Avg'],  'Дерево отрезков ($O(\\log N)$)',     'd', '#9467bd')
+    plot_smooth(ax, N, df['Fenwick_Update_Avg'],  'Дерево Фенвика ($O(\\log N)$)',      'P', '#8c564b')
 
     ax.set_title('Средняя сложность обновления в точке (ключевые операции)', fontsize=14, pad=15)
     ax.set_xlabel('Размер входных данных ($N$)', fontsize=12)

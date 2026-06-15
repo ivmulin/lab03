@@ -32,14 +32,16 @@ int main() {
   csv_file << "N,RSQ1D_Build,RSQ1D_Query_Avg,"
            << "RSQ2D_Build,RSQ2D_Query_Avg,"
            << "RMQ1D_Build,RMQ1D_Query_Avg,"
-           << "Sqrt_Build,Sqrt_Query_Avg,Sqrt_Update_Avg,"
+           << "SqrtRMQ_Build,SqrtRMQ_Query_Avg,SqrtRMQ_Update_Avg,"
+           << "SqrtRSQ_Build,SqrtRSQ_Query_Avg,SqrtRSQ_Update_Avg,"
            << "SegTree_Build,SegTree_Query_Avg,SegTree_Update_Avg,"
            << "Fenwick_Build,Fenwick_Query_Avg,Fenwick_Update_Avg,"
            << "SparseTable_Build,SparseTable_Query_Avg\n";
 
   std::cout << "Measurements deployed" << std::endl;
 
-  auto min_op = [](int a, int b) { return std::min(a, b); };
+  auto min_op  = [](int a, int b) { return std::min(a, b); };
+  auto plus_op = [](int a, int b) { return a + b; };
 
   for (int step = 0; step < k; ++step) {
     int n = start_n + step * increment_n;
@@ -104,6 +106,19 @@ int main() {
     double sqrt_query_avg  = static_cast<double>(sqrt_query_ops_sum)  / num_queries;
     double sqrt_update_avg = static_cast<double>(sqrt_update_ops_sum) / num_queries;
 
+    // --- Корневая декомпозиция (RSQ) ---
+    SqrtDecomposition<int, decltype(plus_op)> sqrt_rsq(0, plus_op);
+    long long sqrt_rsq_build_ops = sqrt_rsq.build(arr_1d);
+    long long sqrt_rsq_query_ops_sum = 0, sqrt_rsq_update_ops_sum = 0;
+    for (int q = 0; q < num_queries; ++q) {
+      int l = idx_dist(rng), r = idx_dist(rng);
+      if (l > r) std::swap(l, r);
+      sqrt_rsq_query_ops_sum += sqrt_rsq.query(l, r).second;
+      sqrt_rsq_update_ops_sum += sqrt_rsq.update(idx_dist(rng), val_dist(rng));
+    }
+    double sqrt_rsq_query_avg  = static_cast<double>(sqrt_rsq_query_ops_sum)  / num_queries;
+    double sqrt_rsq_update_avg = static_cast<double>(sqrt_rsq_update_ops_sum) / num_queries;
+
     // --- Дерево отрезков (RMQ) ---
     SegmentTree seg_tree;
     long long seg_build_ops = seg_tree.build(arr_1d);
@@ -145,7 +160,8 @@ int main() {
              << rsq1d_build_ops  << "," << rsq1d_query_avg  << ","
              << rsq2d_build_ops  << "," << rsq2d_query_avg  << ","
              << rmq1d_build_ops  << "," << rmq1d_query_avg  << ","
-             << sqrt_build_ops   << "," << sqrt_query_avg   << "," << sqrt_update_avg  << ","
+             << sqrt_build_ops      << "," << sqrt_query_avg      << "," << sqrt_update_avg     << ","
+             << sqrt_rsq_build_ops  << "," << sqrt_rsq_query_avg  << "," << sqrt_rsq_update_avg << ","
              << seg_build_ops    << "," << seg_query_avg    << "," << seg_update_avg   << ","
              << fenwick_build_ops << "," << fenwick_query_avg << "," << fenwick_update_avg << ","
              << sparse_build_ops  << "," << sparse_query_avg  << "\n";
